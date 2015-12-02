@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Grace Hopper Academy Guessing Game</title>
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+ 
+  <script type="text/javascript">google.load("jquery", "1.3.2");</script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="GuessingGameCSS.css"> 
+</head>
+
+<body>
+<div class = "containter-fluid">
+  
+  <div class = "row">
+    <div class = "col-md-12">
+    <h1>GUESS</h1>
+      <h2> a number between 1 and 100</h2>
+      <div class="padding">
+    <input type = "text" id="UserInput" placeholder="Enter a number"></input>
+      
+    <button type = "submit" id="Submit">Submit</button>
+    <h4>You should first enter a number</h3>
+    <h3 id="Message"></h3>
+    <button id="PlayAgain">Play Again</button>
+    <button id="Hint">Give me a hint</button>
+      <h2 id="RemainingGuesses">You have 10 attempts left!</h2>
+    </div><!--class padding-->
+    </div><!--col-md-12-->
+  </div><!--row--> 
+  
+</div><!--container-fluid-->
+</body>
+
+<script type="text/javascript" src="GuessingGameJS.js"></script>
+
+
+</html>
