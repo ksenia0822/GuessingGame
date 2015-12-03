@@ -6,8 +6,12 @@ body {
   background-position: center top
 }
 
-.padding {
-  padding-top: 280px;
+.paddingTop230 {
+  padding-top: 230px;
+}
+
+.paddingBottom10 {
+	padding-bottom: 10px;
 }
 
 h3 {

@@ -29,7 +29,7 @@ function playersGuessSubmission(){
 //var $m2 = lowerOrHigher();
 function lowerOrHigher(){
     var $mes;
-	   if(playersGuess < winningNumber) {
+     if(playersGuess < winningNumber) {
        $mes = "Try higher!";
     }//if
     //alert("try again!")
@@ -72,7 +72,7 @@ function checkGuess(){
       $("#RemainingGuesses").text($numGuesses + " attempts left!");
     guessMessage();
   }
-	// add code here
+  // add code here
 }
 
 // Create a provide hint button that provides additional clues to the "Player"
@@ -94,14 +94,14 @@ function provideHint(){
   }
   
   $("#Message").text($h0 + "  "+ $h1 + "  " + $h2 + "  " + $h3);
-	// add code here
+  // add code here
 }
 
 // Allow the "Player" to Play Again
 
 function playAgain(){
   location.reload(true);
-	// add code here
+  // add code here
   
 }
 
@@ -114,4 +114,4 @@ $("#PlayAgain").click(playAgain);
 
 $(document).ready(guessingGame);
 
-/* **** Event Listeners/Handlers ****  */
+/* **** Event Listeners/Handlers ****  */ 
