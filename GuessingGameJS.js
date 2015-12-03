@@ -10,14 +10,13 @@ function generateWinningNumber(){
 }
 
 // Fetch the Players Guess
-var $numGuesses = 10;
+var $numGuesses = 7;
 function playersGuessSubmission(){
 // Add functionality to the playersGuessSubmission function to grab data (the Player's guess) from the input field when the Submit Guess button is clicked and assign the data to the playersGuess variable.
  playersGuess = +$("#UserInput").val();
  checkGuess();
 // Remove the data (Player's guess) from the input field from the DOM since it is already stored in our Web Browser's memory.
 // Write User Guess in h4
-  $("h4").text("Your guess is " + playersGuess);
   $("#UserInput").val("");
 
 }
@@ -41,15 +40,15 @@ function lowerOrHigher(){
 
 function guessMessage() {
   var $m2 = lowerOrHigher();
-  if (Math.abs(winningNumber - playersGuess) > 30) {
-    $m1 = "Your guess is more than 30 digits from the winning number. ";
+  if (Math.abs(winningNumber - playersGuess) > 20) {
+    $m1 = "Your guess is more than 20 digits from the winning number. ";
   }
-  else if(Math.abs(winningNumber - playersGuess) > 20) {
-    $m1 = "Your guess is more than 20 digits away from the winning number. ";
-  }
-  
   else if(Math.abs(winningNumber - playersGuess) > 10) {
     $m1 = "Your guess is more than 10 digits away from the winning number. ";
+  }
+  
+  else if(Math.abs(winningNumber - playersGuess) > 5) {
+    $m1 = "Your guess is more than 5 digits away from the winning number. ";
   }
   
   else if(Math.abs(winningNumber - playersGuess) < 5) {
@@ -64,13 +63,26 @@ function guessMessage() {
 
 function checkGuess(){
    if(playersGuess === winningNumber) {
-     $("#Message").empty();
-     $("#RemainingGuesses").text("YOU WON!!!");
+     $("#NumberMessage").text("Your number is " + playersGuess);
+     $("#Message").text("YOU WON!!!");
+     $("#RemainingGuesses").text('Click "Play Again" to try one more time');
    }
   else {
-      $numGuesses--;
-      $("#RemainingGuesses").text($numGuesses + " attempts left!");
-    guessMessage();
+      if(isNaN(playersGuess) || playersGuess === 0) {
+        $("#NumberMessage").text("This is not a number");
+        $("#Message").text("You should enter a valid number!");
+      } 
+      else {
+        $numGuesses--;
+        $("#NumberMessage").text("Your number is " + playersGuess);
+        $("#RemainingGuesses").text($numGuesses + " attempts left!");
+        guessMessage();
+      }
+  }
+
+  if($numGuesses === 0) {
+     $("#Message").text("You ran out of attempts. LOOSER!")
+     $("#RemainingGuesses").text('Click "Play Again" to try one more time');
   }
   // add code here
 }
@@ -83,10 +95,10 @@ function provideHint(){
   var $h2 = generateWinningNumber();
   var $h3 = winningNumber;
   
-  var array = [$h1,$h2,$h3]
-  var randomizedArray = [];
+  // var array = [$h1,$h2,$h3]
+  // var randomizedArray = [];
   
-  randomizedArray[0] = arrRandom();
+  // randomizedArray[0] = arrRandom();
   
   if($h1 === $h2 || $h1 === $h3 || $h2 === $h2) {
     $h1 === generateWinningNumber();
