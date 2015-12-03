@@ -61,12 +61,32 @@ function guessMessage() {
 
 // Check if the Player's Guess is the winning number 
 
+function preventDefault(x) {
+
+  x.click(function( event ) {
+  event.preventDefault();
+  $( "<div>" )
+    .append( 'Click "Play Again" to try one more time' )
+    .appendTo( $("#Message").empty() );
+    $("#NumberMessage").empty();
+    $("#RemainingGuesses").empty();
+});
+
+
+}
+
 function checkGuess(){
    if(playersGuess === winningNumber) {
      $("#NumberMessage").text("Your number is " + playersGuess);
      $("#Message").text("YOU WON!!!");
      $("#RemainingGuesses").text('Click "Play Again" to try one more time');
+
+     preventDefault($("#Submit"));
+     preventDefault($("#Hint"));
+
+     
    }
+
   else {
       if(isNaN(playersGuess) || playersGuess === 0) {
         $("#NumberMessage").text("This is not a number");
@@ -80,9 +100,11 @@ function checkGuess(){
       }
   }
 
-  if($numGuesses === 0) {
+  if($numGuesses < 1) {
      $("#Message").text("You ran out of attempts. LOOSER!")
      $("#RemainingGuesses").text('Click "Play Again" to try one more time');
+     preventDefault($("#Submit"));
+     preventDefault($("#Hint"));
   }
   // add code here
 }
