@@ -2,27 +2,45 @@
 function guessingGame() {
 // Assign generateWinningNumber() return value to the winningNumber variable
 var playersGuess;
-var winningNumber = generateWinningNumber();
+var winningNumber = generateWinningNumber(100);
 
 // Generate the Winning Number
-function generateWinningNumber(){
-  return Math.floor((Math.random() * 100) + 1);
+function generateWinningNumber(num){
+  return Math.floor((Math.random() * num) + 1);
 }
 
 // Fetch the Players Guess
 var $numGuesses = 7;
+
+var guessArr = []
+
 function playersGuessSubmission(){
 // Add functionality to the playersGuessSubmission function to grab data (the Player's guess) from the input field when the Submit Guess button is clicked and assign the data to the playersGuess variable.
- playersGuess = +$("#UserInput").val();
- checkGuess();
+  playersGuess = +$("#UserInput").val();
+
+ //push the guesses to the array
+
+  guessArr.push(playersGuess);
+
+  checkGuess();
 // Remove the data (Player's guess) from the input field from the DOM since it is already stored in our Web Browser's memory.
 // Write User Guess in h4
   $("#UserInput").val("");
 
+
+//  ??? how to make enter key to work on submit button?
+// $('#Submit').keydown(function() {
+// var key = e.which;
+// if (key == 13) {
+// // As ASCII code for ENTER key is "13"
+// $('#Submit').submit(); // Submit form code
+// }
+// });
+
+
 }
 // 1: Create a click event on the Submit Guess Button.
 
-  //$("#Submit").click(checkGuess);
 
 // Determine if the next guess should be a lower or higher number
 //var $m2 = lowerOrHigher();
@@ -75,23 +93,63 @@ function preventDefault(x) {
 
 }
 
+
+//??? DOESN"T WORK. Where is a bug?
+function checkForRepeatedEntries(arr) {
+  arr.sort();
+  var noRepeats = true;
+  for(var i = 1; i < arr.length; i++) {
+    if(arr[i] == arr[i-1]) {
+        noRepeats === false;
+    }
+
+  }
+  return noRepeats;
+}
+
 function checkGuess(){
-   if(playersGuess === winningNumber) {
+
+  if(playersGuess === winningNumber) {
      $("#NumberMessage").text("Your number is " + playersGuess);
      $("#Message").text("YOU WON!!!");
      $("#RemainingGuesses").text('Click "Play Again" to try one more time');
 
+     $("body").css("background-image", "url('http://cliparts.co/cliparts/pi7/8gq/pi78gqb7T.jpg')");
+     $("h1").css("display", "none");
+     $("h2").css("display", "none");
+     $("#YouWon").css("display", "none");
+     $(".paddingTop230").css("padding-top", "350px");
+     $("#Message").css("font-size", "70px");
+
      preventDefault($("#Submit"));
      preventDefault($("#Hint"));
 
-     
    }
 
+
+
   else {
+
       if(isNaN(playersGuess) || playersGuess === 0) {
         $("#NumberMessage").text("This is not a number");
         $("#Message").text("You should enter a valid number!");
       } 
+
+      else if(playersGuess < 0 || playersGuess > 100) {
+        $("#NumberMessage").text("Your number is " + playersGuess);
+        $("#Message").text("This number is not in the range from 1 to 100. Try another one!");
+
+      }
+
+      //check for the repeated User Inputs
+      //??? DOESN"T WORK. Where is a bug?
+
+      else if(!checkForRepeatedEntries(guessArr)) {
+        $("#NumberMessage").text("Your number is " + playersGuess);
+        $("#Message").text("You have already tried this number. Try another one!");
+      }
+
+
       else {
         $numGuesses--;
         $("#NumberMessage").text("Your number is " + playersGuess);
@@ -112,6 +170,7 @@ function checkGuess(){
 // Create a provide hint button that provides additional clues to the "Player"
 
 function provideHint(){
+
   var $h0 = "Your number is one of the three numbers: "; 
   var $h1 = generateWinningNumber();
   var $h2 = generateWinningNumber();
@@ -119,6 +178,8 @@ function provideHint(){
   
   // var array = [$h1,$h2,$h3]
   // var randomizedArray = [];
+
+
   
   // randomizedArray[0] = arrRandom();
   
