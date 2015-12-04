@@ -14,14 +14,20 @@ body {
 	padding-bottom: 10px;
 }
 
-h3 {
-  color: #dd2342;
-}
-h1,h2 {
-color: #000059;
-}
 
 h1 {
-  font-weight: bold;
+	color: #000059;
+	font-family: Trebuchet MS;
+	 font-weight: bold;
   font-size: 50px;
 }
+
+h2 {
+	color: #000059;
+
+}
+
+#Message{
+  color: #dd2342;
+}
+

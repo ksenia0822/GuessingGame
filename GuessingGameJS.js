@@ -12,46 +12,30 @@ function generateWinningNumber(num){
 // Fetch the Players Guess
 var $numGuesses = 7;
 
-var guessArr = []
 
 function playersGuessSubmission(){
 // Add functionality to the playersGuessSubmission function to grab data (the Player's guess) from the input field when the Submit Guess button is clicked and assign the data to the playersGuess variable.
   playersGuess = +$("#UserInput").val();
+  //guessArr.push(playersGuess);
 
  //push the guesses to the array
-
-  guessArr.push(playersGuess);
-
+  checkForRepeats(guessArr, playersGuess);
   checkGuess();
+
 // Remove the data (Player's guess) from the input field from the DOM since it is already stored in our Web Browser's memory.
 // Write User Guess in h4
   $("#UserInput").val("");
-
-
-//  ??? how to make enter key to work on submit button?
-// $('#Submit').keydown(function() {
-// var key = e.which;
-// if (key == 13) {
-// // As ASCII code for ENTER key is "13"
-// $('#Submit').submit(); // Submit form code
-// }
-// });
-
-
 }
-// 1: Create a click event on the Submit Guess Button.
-
 
 // Determine if the next guess should be a lower or higher number
 //var $m2 = lowerOrHigher();
 function lowerOrHigher(){
     var $mes;
-     if(playersGuess < winningNumber) {
-       $mes = "Try higher!";
-    }//if
-    //alert("try again!")
-    else if(playersGuess > winningNumber) {
-       $mes = "Try lower!";
+      if(playersGuess < winningNumber) {
+        $mes = "Try higher!";
+    }
+      else if(playersGuess > winningNumber) {
+        $mes = "Try lower!";
     }
   return $mes;
 }
@@ -72,13 +56,10 @@ function guessMessage() {
   else if(Math.abs(winningNumber - playersGuess) < 5) {
     $m1 = "Your guess is within 5 digits from the winning number. ";
   }
-  //var $result = $m1 + $m2;
   $("#Message").text($m1 + $m2);
-  //return $message;
 }
 
 // Check if the Player's Guess is the winning number 
-
 function preventDefault(x) {
 
   x.click(function( event ) {
@@ -89,22 +70,27 @@ function preventDefault(x) {
     $("#NumberMessage").empty();
     $("#RemainingGuesses").empty();
 });
-
-
 }
 
-
 //??? DOESN"T WORK. Where is a bug?
-function checkForRepeatedEntries(arr) {
-  arr.sort();
-  var noRepeats = true;
-  for(var i = 1; i < arr.length; i++) {
-    if(arr[i] == arr[i-1]) {
-        noRepeats === false;
+
+var guessArr = [];
+
+function checkForRepeats(arr,currentGuess) {
+    //guessArr.push(playersGuess);
+
+    if(arr.indexOf(currentGuess) === 0) {
+      $("#NumberMessage").text("Your number is " + playersGuess);
+      $("#Message").text("You have already tried this number. Try another one!");
+    
+    } else {
+      guessArr.push(currentGuess);
+      //checkGuess();
+        // $("#NumberMessage").text("Your number is " + playersGuess);
+        // $("#Message").text("You have already tried this number. Try another one!");
     }
 
-  }
-  return noRepeats;
+    alert(guessArr);
 }
 
 function checkGuess(){
@@ -115,18 +101,15 @@ function checkGuess(){
      $("#RemainingGuesses").text('Click "Play Again" to try one more time');
 
      $("body").css("background-image", "url('http://cliparts.co/cliparts/pi7/8gq/pi78gqb7T.jpg')");
-     $("h1").css("display", "none");
-     $("h2").css("display", "none");
-     $("#YouWon").css("display", "none");
+     $("h1, h2, #YouWon").css("display", "none");
      $(".paddingTop230").css("padding-top", "350px");
      $("#Message").css("font-size", "70px");
 
-     preventDefault($("#Submit"));
-     preventDefault($("#Hint"));
+     //or if elements are not hidden:
+     // preventDefault($("#Submit"));
+     // preventDefault($("#Hint"));
 
    }
-
-
 
   else {
 
@@ -143,12 +126,10 @@ function checkGuess(){
 
       //check for the repeated User Inputs
       //??? DOESN"T WORK. Where is a bug?
-
-      else if(!checkForRepeatedEntries(guessArr)) {
-        $("#NumberMessage").text("Your number is " + playersGuess);
-        $("#Message").text("You have already tried this number. Try another one!");
-      }
-
+      // else if(!checkForRepeatedEntries(guessArr)) {
+      //   $("#NumberMessage").text("Your number is " + playersGuess);
+      //   $("#Message").text("You have already tried this number. Try another one!");
+      // }
 
       else {
         $numGuesses--;
@@ -164,49 +145,49 @@ function checkGuess(){
      preventDefault($("#Submit"));
      preventDefault($("#Hint"));
   }
-  // add code here
 }
 
 // Create a provide hint button that provides additional clues to the "Player"
-
 function provideHint(){
 
   var $h0 = "Your number is one of the three numbers: "; 
-  var $h1 = generateWinningNumber();
-  var $h2 = generateWinningNumber();
+  var $h1 = generateWinningNumber(100);
+  var $h2 = generateWinningNumber(100);
   var $h3 = winningNumber;
   
-  // var array = [$h1,$h2,$h3]
-  // var randomizedArray = [];
-
-
-  
-  // randomizedArray[0] = arrRandom();
-  
   if($h1 === $h2 || $h1 === $h3 || $h2 === $h2) {
-    $h1 === generateWinningNumber();
-    $h2 = generateWinningNumber();
+    $h1 = generateWinningNumber(100);
+    $h2 = generateWinningNumber(100);
   }
   
-  $("#Message").text($h0 + "  "+ $h1 + "  " + $h2 + "  " + $h3);
-  // add code here
+  var randArr = [];
+  //[W||L, W||L, W||L]
+  randArr[0] = $h1;
+  randArr[1] = $h2;
+  randArr[2] = $h3;
+  randArr[generateWinningNumber(2)] = $h3;
+
+ //return randArr; 
+  $("#Message").text($h0 + "  "+ randArr[0] + "  " + randArr[1] + "  " + randArr[2]);
 }
 
 // Allow the "Player" to Play Again
-
 function playAgain(){
   location.reload(true);
-  // add code here
-  
 }
 
-
+/* **** Event Listeners/Handlers ****  */ 
 $("#Submit").click(playersGuessSubmission);
 $("#Hint").click(provideHint);
 $("#PlayAgain").click(playAgain);
+
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+        playersGuessSubmission();
+    }
+});
 
 }
 
 $(document).ready(guessingGame);
 
-/* **** Event Listeners/Handlers ****  */ 
